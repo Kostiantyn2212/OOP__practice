@@ -10,6 +10,22 @@ Student::Student(const Student& student):Person(student){
     this->group = student.group;
     this->course = student.course;
 }
+
+void Student::printData() {
+    cout << "‘акультет = " << faculty << endl;
+    cout << " урс = " << course << endl;
+    cout << "√рупа = " << group << endl;
+}
+
+void Student::inputData() {
+    cout << "¬вед≥ть факультет: ";
+    cin >> faculty;
+    cout << "¬вед≥ть курс: ";
+    cin >> course;
+    cout << "¬вед≥ть групу: ";
+    cin >> group;
+}
+
 istream& operator >> (istream& stream, Student& obj)
 {
     stream >> static_cast<Person&>(obj);

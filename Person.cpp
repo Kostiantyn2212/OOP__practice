@@ -33,7 +33,7 @@ istream& operator >> (istream& stream, Person& obj)
     stream >> obj.phoneNumber;
     return stream;
 }
-ostream& operator <<(ostream& stream, Person obj)
+ostream& operator <<(ostream& stream, Person& obj)
 {
     stream << "ID = " << obj.id << endl;
     stream << "Прізвище = " << obj.lastName << endl;

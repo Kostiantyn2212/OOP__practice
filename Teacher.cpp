@@ -9,6 +9,19 @@ Teacher::Teacher(const Teacher& Teacher):Person(Teacher){
     this->cycleCommission = Teacher.cycleCommission;
     this->subjects = Teacher.subjects;
 }
+
+void Teacher::printData() {
+    cout << "Циклова комісія = " << cycleCommission << endl;
+    cout << "Навчальні предмети = " << subjects << endl;
+}
+
+void Teacher::inputData() {
+    cout << "Введіть циклову комісію: ";
+    cin >> cycleCommission;
+    cout << "Введіть навчальні предмети: ";
+    cin >> subjects;
+}
+
 istream& operator >> (istream& stream, Teacher& obj)
 {
     stream >> static_cast<Person&>(obj);
@@ -19,7 +32,7 @@ istream& operator >> (istream& stream, Teacher& obj)
 
     return stream;
 }
-ostream& operator <<(ostream& stream, Teacher obj)
+ostream& operator <<(ostream& stream, Teacher& obj)
 {
     stream << static_cast<Person&>(obj);
     stream << "Циклова комісія = " << obj.cycleCommission << endl;

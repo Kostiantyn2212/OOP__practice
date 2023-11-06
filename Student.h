@@ -9,6 +9,8 @@ private:
     int course;
     string group;
 public:
+    void printData() override;
+    void inputData() override;
     friend std::istream& operator >>(std::istream& in, Student& obj);
     friend std::ostream& operator << (std::ostream& stream, Student obj);
     bool operator ==(const Student& other) const;
