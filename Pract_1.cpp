@@ -1,21 +1,33 @@
 #include <iostream>
 #include <Windows.h>
 #include "Student.h"
-
+#include "Teacher.h"
 using namespace std;
 
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(LC_CTYPE, "ukr");
-    Student student1, student2(1, "Петров", "Іван", "Олександрович", "01.01.2000", "123-45-67", "Факультет", 2, "Група 101"), student3;
+    Student student1, student2(1, "Петров", "Іван", "Олександрович", "01.01.2000", "123-45-67", "Історичний", 2, "Група 101"), student3;
     cin >> student1;
     student3 = student1;
+    cout << endl << student1 << endl << student2 << endl << student3 << endl;
     if (student1 == student2) { cout << "Об'єкти рівні." << endl; }
     else cout << "Об'єкти різняться." << endl;
     if (student2 == student3) { cout << "Об'єкти рівні." << endl; }
     else cout << "Об'єкти різняться." << endl;
     if (student1 == student3) { cout << "Об'єкти рівні." << endl; }
+    else cout << "Об'єкти різняться." << endl;
+
+    Teacher teacher1, teacher2(3, "Дмитрук", "Василь", "Петрович", "09.25.1998", "123-45-67", "ЦК-456", "Математика"), teacher3;
+    cin >> teacher1;
+    teacher3 = teacher1;
+    cout << endl << teacher1 << endl << teacher2 << endl << teacher3 << endl;
+    if (teacher1 == teacher2) { cout << "Об'єкти рівні." << endl; }
+    else cout << "Об'єкти різняться." << endl;
+    if (teacher2 == teacher3) { cout << "Об'єкти рівні." << endl; }
+    else cout << "Об'єкти різняться." << endl;
+    if (teacher1 == teacher3) { cout << "Об'єкти рівні." << endl; }
     else cout << "Об'єкти різняться." << endl;
     return 0;
 }
