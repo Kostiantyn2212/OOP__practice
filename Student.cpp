@@ -38,7 +38,7 @@ istream& operator >> (istream& stream, Student& obj)
 
     return stream;
 }
-ostream& operator <<(ostream& stream, Student obj)
+ostream& operator <<(ostream& stream, Student& obj)
 {
     stream << static_cast<Person&>(obj);
     stream << "Факультет = " << obj.faculty << endl;
