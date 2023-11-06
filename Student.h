@@ -1,15 +1,10 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Person.h"
 using namespace std;
-class Student {
+class Student : public Person{
 private:
-    int id;
-    string firstName;
-    string lastName;
-    string middleName;
-    string birthDate;
-    string phoneNumber;
     string faculty;
     int course;
     string group;
@@ -19,6 +14,6 @@ public:
     bool operator ==(const Student& other) const;
     Student();
     Student(int id, string firstname, string lastname, string middleName, string birthDate, string phoneNumber, string faculty, int course, string group);
-    Student(const Student& abiturient);
+    Student(const Student& student);
     ~Student();
 };

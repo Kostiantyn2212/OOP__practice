@@ -1,15 +1,10 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Person.h"
 using namespace std;
-class Teacher {
+class Teacher : public Person {
 private:
-    int id;
-    string firstName;
-    string lastName;
-    string middleName;
-    string birthDate;
-    string phoneNumber;
     string cycleCommission;
     string subjects;
 public:
