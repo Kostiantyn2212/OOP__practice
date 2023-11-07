@@ -3,128 +3,125 @@
 #include "Student.h"
 #include "Teacher.h"
 #include "Person.h"
-#include "Vector.h"
-#include "Vector.cpp"
 #include <random>
-#include <vector>
 #include <cstdlib>
 #include <algorithm>
+#include <list>
+#include <map>
 using namespace std;
-int Menu(void)
+template <typename T>
+void listPrint(const list<T>& ls)
 {
-    int choice;
-    cout << "Який об'єкт хочете створити" << endl;
-    cout << "1 - Студент" << endl;
-    cout << "2 - Вчитель" << endl;
-    cin >> choice;
-    return choice;
+    for (auto it = ls.begin(); it != ls.end(); it++) {
+        cout << *it << " ";
+    }
+    cout << endl << endl;
+}
+
+void mapInputTeacher(map<int, Person*>& map1, Teacher& person)
+{
+    cin >> person;
+    map1[person.getId()] = &person;
+    cout << endl;
+}
+void mapInputStudent(map<int, Person*>& map1, Student& person)
+{
+    cin >> person;
+    map1[person.getId()] = &person;
+    cout << endl;
+}
+
+void show(map<int, Person*>& map1)
+{
+    bool check = false;
+    if (!map1.empty())
+    {
+        int id;
+        cout << "Enter ID to see information about person: ";
+        cin >> id;
+        for (const auto& pair : map1)
+        {
+            if (id == pair.first)
+            {
+                int idd = pair.first;
+                Person* person = pair.second;
+
+                cout << endl << "Here is person with ID#" << idd << ":" << endl;
+                cout << *person;
+                check = true;
+            }
+        }
+        if (!check)
+        {
+            cout << "Неможемо знайти інформацію про людину з ID = " << id << ". Будь ласка, спробуйте ще раз." << endl;
+        }
+
+    }
+    else cout << "Map пустий!! Заповніть його." << endl;
+
 }
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(LC_CTYPE, "ukr");
-
-    vector<int> vector1(10);
-    vector<int> vector2(10);
-
     srand(time(NULL));
-
-    for (int i = 0; i < 10; i++)
+    list<int> list1(10);
+    list<int> list2(10);
+    for (auto& it : list1)
     {
-        int random = rand() % 100;
-        if (random % 2 == 0)
-        {
-            random++;
-        }
-        vector1[i] = random;
-    }
-
-    for (auto it = vector2.begin(); it != vector2.end(); ++it) {
         int randomValue = rand() % 100;
-        if (randomValue % 2 != 0) {
+        if (randomValue % 2 == 0)
+        {
             randomValue++;
         }
-        *it = randomValue;
+        it = randomValue;
     }
-    sort(vector1.begin(), vector1.end());
-    sort(vector2.begin(), vector2.end());
-    vector<int> vector3(20);
-    merge(vector1.begin(), vector1.end(), vector2.begin(), vector2.end(), vector3.begin());
-
-    cout << "Vector1: ";
-    for (int n : vector1) {
-        cout << n << " ";
+    for (auto& it : list2)
+    {
+        int randomValue = rand() % 100;
+        if (randomValue % 2 != 0)
+        {
+            randomValue++;
+        }
+        it = randomValue;
     }
-    cout << endl;
+    list1.sort();
+    cout << "List of odd random numbers:" << endl;
+    listPrint(list1);
+    list2.sort();
+    cout << "List of even random numbers:" << endl;
+    listPrint(list2);
 
-    cout << "Vector2: ";
-    for (int n : vector2) {
-        cout << n << " ";
-    }
-    cout << endl;
+    list<int> list3;
+    list1.merge(list2);
+    list3.merge(list1);
+    cout << "Merged list3:" << endl;
+    listPrint(list3);
 
-    cout << "Vector3: ";
-    for (int n : vector3) {
-        cout << n << " ";
-    }
-    cout << endl;
+    map<int, Person*> map1;
+    Teacher teacher1, teacher2;
+    Student student1, student2;
 
-    vector<Person*> fpeople;
     int choice;
     do {
-        cout << "Choose object to create (1 - Student, 2 - Teacher, 3 - Exit): ";
+        cout << "Menu:\n1 - Enter data on Map\n2 - Print Map\n3 - Exit\nMake choice: ";
         cin >> choice;
-
-        Person* person = nullptr;
-
-        switch (choice) {
+        switch (choice)
+        {
         case 1:
-            person = new Student();
-            cin >> *(Student*)person;
+            cout << "Enter data of teacher1: " << endl;
+            mapInputTeacher(map1, teacher1);
+            cout << "Enter data of teacher2: " << endl;
+            mapInputTeacher(map1, teacher2);
+            cout << "Enter data of student1: " << endl;
+            mapInputStudent(map1, student1);
+            cout << "Enter data of student2: " << endl;
+            mapInputStudent(map1, student2);
             break;
-        case 2:
-            person = new Teacher();
-            cin >> *(Teacher*)person;
-            break;
-        case 3:
-            break;
-        default:
-            cout << "Wrong choise." << endl;
+        case 2:show(map1); break;
+        case 3: break;
         }
-
-        if (person) {
-            fpeople.push_back(person);
-        }
-    } while (choice != 3);
-    vector<Person*>speople(fpeople);
-
-
-    ////
-    for (int x = 0; x < fpeople.size(); x++) {
-        if (dynamic_cast<Teacher*>(fpeople[x])) {
-            fpeople.erase(fpeople.begin() + x);
-        }
-    }
-
-    for (int x = 0; x < speople.size(); x++) {
-        if (dynamic_cast<Student*>(speople[x])) {
-            speople.erase(speople.begin() + x);
-        }
-    }
-
-
-    ////
-
-    cout << endl << "Objects of vector1: " << endl;
-    for (Person* person : fpeople) {
-        cout << *person;
-        cout << endl;
-    }
-    cout << endl << "Objects of vector2:" << endl;
-    for (Person* person : speople) {
-        cout << *person;
-    }
-    cout << endl << endl;
+    }while (choice != 3);
 
     /*Vector<int> intVector;
     for (int i = 0; i < 10; i++)

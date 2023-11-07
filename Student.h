@@ -14,6 +14,7 @@ public:
     friend std::istream& operator >>(std::istream& in, Student& obj);
     friend std::ostream& operator << (std::ostream& stream, Student& obj);
     bool operator ==(const Student& other) const;
+    int getId() override;
     Student();
     Student(int id, string firstname, string lastname, string middleName, string birthDate, string phoneNumber, string faculty, int course, string group);
     Student(const Student& student);

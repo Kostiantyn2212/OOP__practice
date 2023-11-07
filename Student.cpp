@@ -25,7 +25,7 @@ void Student::inputData() {
     cout << "¬вед≥ть групу: ";
     cin >> group;
 }
-
+int Student::getId() { return Person::getId(); }
 istream& operator >> (istream& stream, Student& obj)
 {
     stream >> static_cast<Person&>(obj);

@@ -21,6 +21,7 @@ void Teacher::inputData() {
     cout << "¬вед≥ть навчальн≥ предмети: ";
     cin >> subjects;
 }
+int Teacher::getId() { return Person::getId(); }
 
 istream& operator >> (istream& stream, Teacher& obj)
 {

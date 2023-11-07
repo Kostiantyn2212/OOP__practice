@@ -17,6 +17,7 @@ Person::Person(const Person& Person) {
     this->birthDate = Person.birthDate;
     this->phoneNumber = Person.phoneNumber;
 }
+int Person::getId() {return id;}
 istream& operator >> (istream& stream, Person& obj)
 {
     cout << "Ââåä³òü ID: ";

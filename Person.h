@@ -16,6 +16,7 @@ public:
     friend std::istream& operator >>(std::istream& in, Person& obj);
     friend std::ostream& operator << (std::ostream& stream, Person& obj);
     bool operator ==(const Person& other) const;
+    virtual int getId();
     Person();
     Person(int id, string firstname, string lastname, string middleName, string birthDate, string phoneNumber);
     Person(const Person& abiturient);
