@@ -5,6 +5,10 @@
 #include "Person.h"
 #include "Vector.h"
 #include "Vector.cpp"
+#include <random>
+#include <vector>
+#include <cstdlib>
+#include <algorithm>
 using namespace std;
 int Menu(void)
 {
@@ -20,7 +24,109 @@ int main() {
     SetConsoleOutputCP(1251);
     setlocale(LC_CTYPE, "ukr");
 
-    Vector<int> intVector;
+    vector<int> vector1(10);
+    vector<int> vector2(10);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < 10; i++)
+    {
+        int random = rand() % 100;
+        if (random % 2 == 0)
+        {
+            random++;
+        }
+        vector1[i] = random;
+    }
+
+    for (auto it = vector2.begin(); it != vector2.end(); ++it) {
+        int randomValue = rand() % 100;
+        if (randomValue % 2 != 0) {
+            randomValue++;
+        }
+        *it = randomValue;
+    }
+    sort(vector1.begin(), vector1.end());
+    sort(vector2.begin(), vector2.end());
+    vector<int> vector3(20);
+    merge(vector1.begin(), vector1.end(), vector2.begin(), vector2.end(), vector3.begin());
+
+    cout << "Vector1: ";
+    for (int n : vector1) {
+        cout << n << " ";
+    }
+    cout << endl;
+
+    cout << "Vector2: ";
+    for (int n : vector2) {
+        cout << n << " ";
+    }
+    cout << endl;
+
+    cout << "Vector3: ";
+    for (int n : vector3) {
+        cout << n << " ";
+    }
+    cout << endl;
+
+    vector<Person*> fpeople;
+    int choice;
+    do {
+        cout << "Choose object to create (1 - Student, 2 - Teacher, 3 - Exit): ";
+        cin >> choice;
+
+        Person* person = nullptr;
+
+        switch (choice) {
+        case 1:
+            person = new Student();
+            cin >> *(Student*)person;
+            break;
+        case 2:
+            person = new Teacher();
+            cin >> *(Teacher*)person;
+            break;
+        case 3:
+            break;
+        default:
+            cout << "Wrong choise." << endl;
+        }
+
+        if (person) {
+            fpeople.push_back(person);
+        }
+    } while (choice != 3);
+    vector<Person*>speople(fpeople);
+
+
+    ////
+    for (int x = 0; x < fpeople.size(); x++) {
+        if (dynamic_cast<Teacher*>(fpeople[x])) {
+            fpeople.erase(fpeople.begin() + x);
+        }
+    }
+
+    for (int x = 0; x < speople.size(); x++) {
+        if (dynamic_cast<Student*>(speople[x])) {
+            speople.erase(speople.begin() + x);
+        }
+    }
+
+
+    ////
+
+    cout << endl << "Objects of vector1: " << endl;
+    for (Person* person : fpeople) {
+        cout << *person;
+        cout << endl;
+    }
+    cout << endl << "Objects of vector2:" << endl;
+    for (Person* person : speople) {
+        cout << *person;
+    }
+    cout << endl << endl;
+
+    /*Vector<int> intVector;
     for (int i = 0; i < 10; i++)
     {
         intVector.push_back(i * 9 + 1);
@@ -110,7 +216,7 @@ int main() {
         cout << *teacher;
         cout << endl;
     }
-    cout << endl << endl;
+    cout << endl << endl;*/
 
     /*Person* arrayOfPeople[5];
     int rt;
