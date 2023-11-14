@@ -2,9 +2,9 @@
 Teacher::Teacher() {
     this->subjects = "";
     this->cycleCommission = "";
-};
+}
 Teacher::Teacher(int id, string firstName, string lastName, string middleName, string phoneNumber, string birthDate, string cycleCommission, string subjects)
-    :Person(id, firstName, lastName, middleName, phoneNumber, birthDate), cycleCommission(cycleCommission), subjects(subjects) {};
+    :Person(id, firstName, lastName, middleName, phoneNumber, birthDate), cycleCommission(cycleCommission), subjects(subjects) {}
 Teacher::Teacher(const Teacher& Teacher):Person(Teacher){
     this->cycleCommission = Teacher.cycleCommission;
     this->subjects = Teacher.subjects;
@@ -30,6 +30,37 @@ string Teacher::getPhoneNumber() { return Person:: getPhoneNumber(); }
 string Teacher::getCycleCommission(){return cycleCommission; }
 string Teacher::getSubjects(){return subjects; }
 
+void Teacher::setId(int id) {
+    Person::setId(id);
+}
+
+void Teacher::setMiddleName(std::string middleName) {
+    Person::setMiddleName(middleName);
+}
+
+void Teacher::setLastName(std::string lastName) {
+    Person::setLastName(lastName);
+}
+
+void Teacher::setBirthDate(std::string birthDate) {
+    Person::setBirthDate(birthDate);
+}
+
+void Teacher::setPhoneNumber(std::string phoneNumber) {
+    Person::setPhoneNumber(phoneNumber);
+}
+
+void Teacher::setFirstName(std::string firstName) {
+    Person::setFirstName(firstName);
+}
+
+void Teacher::setCycleCommission(std::string cycleCommission) {
+    this->cycleCommission = cycleCommission;
+}
+
+void Teacher::setSubjects(std::string subjects) {
+    this->subjects = subjects;
+}
 istream& operator >> (istream& stream, Teacher& obj)
 {
     stream >> static_cast<Person&>(obj);
@@ -50,4 +81,4 @@ ostream& operator <<(ostream& stream, Teacher& obj)
 bool Teacher::operator ==(const Teacher& other) const {
     return (Person::operator==(other)) && cycleCommission == other.cycleCommission && subjects == other.subjects;
 }
-Teacher::~Teacher() {};
+Teacher::~Teacher() {}

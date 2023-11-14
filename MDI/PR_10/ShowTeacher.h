@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QListWidget>
-#include "CreateTeacher.h"
 #include <QDialog>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -13,14 +12,7 @@
 #include <QCheckBox>
 #include <QLineEdit>
 #include <QWidget>
-#include "mainwindow.h"
-#include "Teacher.h"
-#include "Person.h"
-#include "Student.h"
-#include "CreateTeacher.h"
-#include "CreateStudent.h"
-#include "ShowTeacher.h"
-#include "ShowStudent.h"
+#include "sqlite.h"
 
 namespace Ui {
 class ShowTeacher;
@@ -32,16 +24,15 @@ class ShowTeacher : public QDialog
 
 public:
     explicit ShowTeacher(QWidget *parent = nullptr);
-    void setList(const QVector<Teacher*>& teachers);
-    QListWidget* getListWidget();
+    void setList();
     ~ShowTeacher();
-public slots:
-    void on_teacherCreated(Teacher*);
 
 private:
     Ui::ShowTeacher *ui;
-    bool checkFields();
-    QVector<Teacher*> teachers;
+    DBManager *db;
+    QSqlTableModel  *model;
+    void setupModel(const QString &tableName, const QStringList &headers);
+    void createUI();
 };
 
 #endif // SHOWTEACHER_H

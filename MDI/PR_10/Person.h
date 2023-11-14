@@ -22,8 +22,14 @@ public:
     virtual string getLastName();
     virtual string getBirthDate();
     virtual string getPhoneNumber();
+    virtual void setId(int id);
+    virtual void setMiddleName(std::string middleName);
+    virtual void setLastName(std::string lastName);
+    virtual void setBirthDate(std::string birthDate);
+    virtual void setPhoneNumber(std::string phoneNumber);
+    virtual void setFirstName(std::string firstName);
     Person();
     Person(int id, string firstname, string lastname, string middleName, string birthDate, string phoneNumber);
-    Person(const Person& teacher);
+    Person(const Person& abiturient);
     ~Person();
 };

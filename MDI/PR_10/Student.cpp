@@ -3,8 +3,8 @@ Student::Student() {
     this->faculty = "";
     this->group = "";
     this->course = 0;
-};
-Student::Student(int id, string firstName, string lastName, string middleName,string birthDate, string phoneNumber,  string faculty, int course, string group):Person(id, firstName, lastName, middleName, phoneNumber, birthDate), faculty(faculty), course(course), group(group) {};
+}
+Student::Student(int id, string firstName, string lastName, string middleName,string birthDate, string phoneNumber,  string faculty, int course, string group):Person(id, firstName, lastName, middleName, phoneNumber, birthDate), faculty(faculty), course(course), group(group) {}
 Student::Student(const Student& student):Person(student){
     this->faculty = student.faculty;
     this->group = student.group;
@@ -34,6 +34,43 @@ string Student::getPhoneNumber() { return Person:: getPhoneNumber(); }
 string Student::getFaculty(){return faculty; }
 int Student::getCourse(){return course; }
 string Student::getGroup(){return group; }
+
+void Student::setId(int id) {
+    Person::setId(id);
+}
+
+void Student::setMiddleName(std::string middleName) {
+    Person::setMiddleName(middleName);
+}
+
+void Student::setLastName(std::string lastName) {
+    Person::setLastName(lastName);
+}
+
+void Student::setBirthDate(std::string birthDate) {
+    Person::setBirthDate(birthDate);
+}
+
+void Student::setPhoneNumber(std::string phoneNumber) {
+    Person::setPhoneNumber(phoneNumber);
+}
+
+void Student::setFirstName(std::string firstName) {
+   Person::setFirstName(firstName);
+}
+
+void Student::setFaculty(std::string faculty) {
+   this->faculty = faculty;
+}
+
+void Student::setCourse(int course) {
+   this->course = course;
+}
+
+void Student::setGroup(std::string group) {
+   this->group = group;
+}
+
 istream& operator >> (istream& stream, Student& obj)
 {
     stream >> static_cast<Person&>(obj);
@@ -57,4 +94,4 @@ ostream& operator <<(ostream& stream, Student& obj)
 bool Student::operator ==(const Student& other) const {
     return(Person::operator==(other))&& faculty == other.faculty && course == other.course && group == other.group;
 }
-Student::~Student() {};
+Student::~Student() {}

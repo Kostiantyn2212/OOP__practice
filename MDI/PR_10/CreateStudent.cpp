@@ -6,41 +6,16 @@ CreateStudent::CreateStudent(QWidget *parent) :
     ui(new Ui::CreateStudent)
 {
     ui->setupUi(this);
-    idLe = findChild<QLineEdit*>("idLe");
-    lastNameLe = findChild<QLineEdit*>("lastNameLe");
-    firstNameLe = findChild<QLineEdit*>("firstNameLe");
-    middleNameLe = findChild<QLineEdit*>("middleNameLe");
-    birthDateLe = findChild<QLineEdit*>("birthDateLe");
-    phoneNumberLe = findChild<QLineEdit*>("phoneNumberLe");
-    facultyLe = findChild<QLineEdit*>("facultyLe");
-    courseLe = findChild<QLineEdit*>("courseLe");
-    groupLe = findChild<QLineEdit*>("groupLe");
 }
 
 CreateStudent::~CreateStudent()
 {
     delete ui;
 }
-bool CreateStudent::checkFields(){
-    bool check = false;
-    if(ui->idLe->text().isEmpty() || ui->middleNameLe->text().isEmpty() || ui->firstNameLe->text().isEmpty() || ui->lastNameLe->text().isEmpty() || ui->birthDateLe->text().isEmpty() ||ui->phoneNumberLe->text().isEmpty() || ui->facultyLe->text().isEmpty() || ui->courseLe->text().isEmpty() || ui->groupLe->text().isEmpty()){
-        check = false;
-    }
-    else check = true;
-    return check;
-}
 
 void CreateStudent::on_confirmStudentButton_clicked()
 {
-    //    ui->idLn->setText("");
-    //    ui->firstNameLn->setText("");
-    //    ui->surnameLn->setText("");
-    //    ui->lastNameLn->setText("");
-    //    ui->addressLn->setText("");
-    //    ui->phoneNumLn->setText("");
-    //    ui->specializationLn->setText("");
-
-
+    SqliteDBManager* db= SqliteDBManager::getInstance();
     id = ui->idLe->text();
     lastName = ui->lastNameLe->text();
     firstName = ui->firstNameLe->text();
@@ -51,15 +26,25 @@ void CreateStudent::on_confirmStudentButton_clicked()
     course = ui->courseLe->text();
     group = ui->groupLe->text();
 
-    if (checkFields()) {
-        newStudent = new Student(id.toInt(), lastName.toStdString(), firstName.toStdString(), middleName.toStdString(), birthDate.toStdString(), phoneNumber.toStdString(), faculty.toStdString(),course.toInt(),group.toStdString());
-        emit studentCreated(newStudent);
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::information(this, "Created successful!", "Now object is created! Close this window to look out the printed data.", QMessageBox::Yes | QMessageBox::No);
-        if (reply == QMessageBox::Yes) {
-            accept();
+    if(ui->idLe->text().isEmpty() || ui->lastNameLe->text().isEmpty() || ui->firstNameLe->text().isEmpty() || ui->middleNameLe->text().isEmpty() || ui->birthDateLe->text().isEmpty() || ui->phoneNumberLe->text().isEmpty() || ui->facultyLe->text().isEmpty() || ui->courseLe->text().isEmpty() || ui->groupLe->text().isEmpty()){
+        QMessageBox::warning(this, "Error", "Empty fields");
+    }
+    else {
+        Student student;
+        student.setId(id.toInt());
+        student.setLastName(lastName.toStdString());
+        student.setFirstName(firstName.toStdString());
+        student.setMiddleName(middleName.toStdString());
+        student.setBirthDate(birthDate.toStdString());
+        student.setPhoneNumber(phoneNumber.toStdString());
+        student.setFaculty(faculty.toStdString());
+        student.setCourse(course.toInt());
+        student.setGroup(group.toStdString());
+        if (db->insertIntoStudents(student)) {
+            QMessageBox::information(this, "Success", "Created object");
+
+        } else {
+            QMessageBox::warning(this, "Error", "Error with the database!");
         }
-    } else {
-        QMessageBox::warning(this, "Error due to input data :(", "Some fields are empty, please fill them all!!!");
     }
 }

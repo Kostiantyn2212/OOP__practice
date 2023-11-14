@@ -18,6 +18,7 @@
 #include "CreateStudent.h"
 #include "ShowTeacher.h"
 #include "ShowStudent.h"
+#include "sqlite.h"
 namespace Ui {
 class CreateTeacher;
 }
@@ -29,18 +30,15 @@ class CreateTeacher : public QDialog
 public:
     explicit CreateTeacher(QWidget *parent = nullptr);
     ~CreateTeacher();
-signals:
-    void teacherCreated(Teacher*);
 
 private slots:
     void on_confirmTeacherButton_clicked();
 
 private:
     Ui::CreateTeacher *ui;
-    Teacher* newTeacher;
-    QLineEdit *idLe, *lastNameLe, *firstNameLe, *middleNameLe, *birthDateLe, *phoneNumberLe, *cycleCommissionLe, *subjectsLe;
     QString id, lastName, firstName,middleName, birthDate, phoneNumber, cycleCommission, subjects;
-    bool checkFields();
+    DBManager *db;
+    QSqlTableModel  *model;
 };
 
 #endif // CREATETEACHER_H

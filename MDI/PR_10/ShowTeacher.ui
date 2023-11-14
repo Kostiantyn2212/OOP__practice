@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
-    <height>340</height>
+    <width>663</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,13 +16,13 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QListWidget" name="listWidgetTeacher">
+  <widget class="QTableView" name="teacherTableView">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>20</y>
-     <width>501</width>
-     <height>301</height>
+     <width>621</width>
+     <height>381</height>
     </rect>
    </property>
   </widget>

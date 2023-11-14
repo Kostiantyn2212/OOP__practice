@@ -2,25 +2,8 @@
 #define SHOWSTUDENT_H
 
 #include <QDialog>
-#include <QListWidget>
-#include "CreateStudent.h"
-#include <QDialog>
-#include <QMainWindow>
-#include <QMessageBox>
-#include <QLabel>
-#include <QLayout>
-#include <QPushButton>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QWidget>
-#include "mainwindow.h"
-#include "Teacher.h"
-#include "Person.h"
-#include "Student.h"
-#include "CreateTeacher.h"
-#include "CreateStudent.h"
-#include "ShowTeacher.h"
-#include "ShowStudent.h"
+#include "sqlite.h"
+
 namespace Ui {
 class ShowStudent;
 }
@@ -31,15 +14,15 @@ class ShowStudent : public QDialog
 
 public:
     explicit ShowStudent(QWidget *parent = nullptr);
-    void setList(const QVector<Student*>& students);
-    QListWidget* getListWidget();
+    void setList();
     ~ShowStudent();
-public slots:
-    void on_studentCreated(Student*);
+
 private:
     Ui::ShowStudent *ui;
-    bool checkFields();
-    QVector<Student*> students;
+    DBManager *db;
+    QSqlTableModel  *model;
+    void setupModel(const QString &tableName, const QStringList &headers);
+    void createUI();
 };
 
 #endif // SHOWSTUDENT_H

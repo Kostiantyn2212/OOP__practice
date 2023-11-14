@@ -20,18 +20,18 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class QSqlTableModel;
+class DBManager;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(DBManager* dbManager, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    void on_teacherCreated(Teacher*);
-    void on_studentCreated(Student*);
-
     void on_createTeacherButton_clicked();
 
     void on_createStudentButton_clicked();
@@ -41,14 +41,12 @@ private slots:
     void on_showStudentButton_clicked();
 
     void on_exitButton_clicked();
-
-    void on_itemTecDoubleClicked(QListWidgetItem *item);
-
-    void on_itemStuDoubleClicked(QListWidgetItem *item);
 private:
     Ui::MainWindow *ui;
-    QVector<Teacher*> teachers;
-    QVector<Student*> students;
     QString id, lastName, firstName, middleName, birthDate, phoneNumber, cycleCommission, subjects, faculty, course, group;
+    ShowTeacher *showTeacher;
+    ShowStudent *showStudent;
+    DBManager *db;
+    QSqlTableModel  *model;
 };
 #endif // MAINWINDOW_H

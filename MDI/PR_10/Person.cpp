@@ -6,9 +6,10 @@ Person::Person() {
     this->middleName = "";
     this->phoneNumber = "";
     this->birthDate = "";
-};
+}
+
 Person::Person(int id, string firstName, string lastName, string middleName, string phoneNumber, string birthDate)
-    :id(id), firstName(firstName), lastName(lastName), middleName(middleName), phoneNumber(phoneNumber), birthDate(birthDate){};
+    :id(id), firstName(firstName), lastName(lastName), middleName(middleName), phoneNumber(phoneNumber), birthDate(birthDate){}
 Person::Person(const Person& Person) {
     this->id = Person.id;
     this->firstName = Person.firstName;
@@ -23,6 +24,31 @@ string Person::getFirstName() { return firstName; }
 string Person::getLastName() { return lastName; }
 string Person::getBirthDate() { return birthDate; }
 string Person::getPhoneNumber() { return phoneNumber; }
+
+void Person::setId(int id) {
+    this->id = id;
+}
+
+void Person::setMiddleName(std::string middleName) {
+    this->middleName = middleName;
+}
+
+void Person::setLastName(std::string lastName) {
+    this->lastName = lastName;
+}
+
+void Person::setBirthDate(std::string birthDate) {
+    this->birthDate = birthDate;
+}
+
+void Person::setPhoneNumber(std::string phoneNumber) {
+    this->phoneNumber = phoneNumber;
+}
+
+void Person::setFirstName(std::string firstName) {
+    this->firstName = firstName;
+}
+
 istream& operator >> (istream& stream, Person& obj)
 {
     cout << "Введіть ID: ";
@@ -53,4 +79,4 @@ bool Person::operator ==(const Person& other) const {
     return id == other.id && lastName == other.lastName && firstName == other.firstName && middleName == other.middleName &&
            birthDate == other.birthDate && phoneNumber == other.phoneNumber;
 }
-Person::~Person() {};
+Person::~Person() {}

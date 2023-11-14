@@ -3,6 +3,7 @@
 #include <QLayout>
 #include <QListWidget>
 #include <QListWidgetItem>
+
 ShowStudent::ShowStudent(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ShowStudent)
@@ -15,38 +16,43 @@ ShowStudent::~ShowStudent()
     delete ui;
 }
 
-QListWidget* ShowStudent::getListWidget() {
-    return (ui->listWidgetStudent);
-}
-void ShowStudent::setList(const QVector<Student *> &students){
-    for (Student* student : students) {
-        QString itemText = "ID: " + QString::number(student->getId()) +
-                           ", Last name: " + QString::fromStdString(student->getLastName()) +
-                           ", First Name: " + QString::fromStdString(student->getFirstName()) +
-                           ", Middle name: " + QString::fromStdString(student->getMiddleName()) +
-                           ", Birth date: " + QString::fromStdString(student->getBirthDate()) +
-                           ", Phone: " + QString::fromStdString(student->getPhoneNumber()) +
-                           ", Faculty: " + QString::fromStdString(student->getFaculty()) +
-                           ", Course: " + QString::number(student->getCourse()) +
-                           ", Group: " + QString::fromStdString(student->getGroup());
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidgetStudent);
-        item->setText(QString::number(student->getId()));
-        item->setData(Qt::UserRole, QVariant::fromValue(student));
+void ShowStudent::setupModel(const QString &tableName, const QStringList &headers)
+{
+    SqliteDBManager* db= SqliteDBManager::getInstance();
+    model = new QSqlTableModel(this, db->getDB());
+    model->setTable(tableName);
+    for(int i = 0, j = 0; i < model->columnCount(); i++, j++){
+        model->setHeaderData(i, Qt::Horizontal, headers[j]);
     }
+    model->setSort(0,Qt::AscendingOrder);
 }
 
-void ShowStudent::on_studentCreated(Student* student)
+
+void ShowStudent::createUI()
 {
-    QListWidgetItem *item = new QListWidgetItem;
-    item->setText(QString("ID: %1, Last name: %2, First name: %3, Middle name: %4, Birth date: %5, Phone number: %6, Faculty: %7, Course: %8 , Group: %9")
-                      .arg(QString::number(student->getId()))
-                      .arg(QString::fromStdString(student->getLastName()))
-                      .arg(QString::fromStdString(student->getFirstName()))
-                      .arg(QString::fromStdString(student->getMiddleName()))
-                      .arg(QString::fromStdString(student->getBirthDate()))
-                      .arg(QString::fromStdString(student->getPhoneNumber()))
-                      .arg(QString::fromStdString(student->getFaculty()))
-                      .arg(QString::number(student->getCourse()))
-                      .arg(QString::fromStdString(student->getGroup())));
-    ui->listWidgetStudent->addItem(item);
+    ui->studentTableView->setModel(model);
+    ui->studentTableView->setColumnHidden(0, true);
+    ui->studentTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->studentTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->studentTableView->resizeColumnsToContents();
+    ui->studentTableView->setEditTriggers(QAbstractItemView::DoubleClicked);
+    ui->studentTableView->horizontalHeader()->setStretchLastSection(true);
+
+    model->select();
+}
+
+void ShowStudent::setList(){
+    this->setupModel(TABLE_STUDENTS,
+                     QStringList() << tr("ID")
+                                   << tr("Middle name")
+                                   << tr("First name")
+                                   << tr("Last name")
+                                   << tr("Birth date")
+                                   << tr("Phone number")
+                                   << tr("Faculty")
+                                   << tr("Course")
+                                   << tr("Group")
+                     );
+
+    this->createUI();
 }
