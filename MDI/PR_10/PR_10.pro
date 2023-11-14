@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     CreateStudent.cpp \
     CreateTeacher.cpp \
+    Logger.cpp \
     Person.cpp \
     ShowStudent.cpp \
     ShowTeacher.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     CreateStudent.h \
     CreateTeacher.h \
+    Logger.h \
     Person.h \
     ShowStudent.h \
     ShowTeacher.h \

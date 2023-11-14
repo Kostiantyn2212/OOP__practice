@@ -1,5 +1,5 @@
 #include "sqlite.h"
-
+#include "Logger.h"
 #include <QObject>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -100,6 +100,7 @@ bool SqliteDBManager::createTables()
 
 bool SqliteDBManager::insertIntoStudents(Student& student)
 {
+        try{
         QSqlQuery query;
         query.prepare("INSERT INTO " TABLE_STUDENTS " ("
                       TABLE_ID ", "
@@ -123,12 +124,18 @@ bool SqliteDBManager::insertIntoStudents(Student& student)
         query.bindValue(":group", QString::fromStdString(student.getGroup()));
 
         if (!query.exec()) {
-        qDebug() << "Error in insert to Students table: "; return false;
+        qDebug() << "Error in insert to Students table: ";
+        throw std::runtime_error("Error in insert to Students table");
         } else return true;
+        }catch(const std::exception &e){
+        qWarning()<<"Exception in inserting: "<<e.what();
+        return false;
+        }
 }
 
 bool SqliteDBManager::insertIntoTeachers(Teacher& teacher)
 {
+        try{
     QSqlQuery query;
         query.prepare("INSERT INTO " TABLE_TEACHERS " ("
                       TABLE_ID ", "
@@ -149,8 +156,15 @@ bool SqliteDBManager::insertIntoTeachers(Teacher& teacher)
         query.bindValue(":cycleCommission", QString::fromStdString(teacher.getCycleCommission()));
         query.bindValue(":subjects", QString::fromStdString(teacher.getSubjects()));
 
+
         if (!query.exec()) {
-        qDebug() << "Error in insert to Teachers table: "; return false;
-    } else return true;
+        qDebug() << "Error in insert to Teachers table: ";
+        throw std::runtime_error("Error in insert to Teachers table");
+        } else return true;
+        }catch(const std::exception &e){
+        qWarning()<<"Exception in inserting: "<<e.what();
+        return false;
+        }
+
 }
 

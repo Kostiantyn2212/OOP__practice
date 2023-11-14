@@ -24,9 +24,10 @@ void CreateTeacher::on_confirmTeacherButton_clicked()
     phoneNumber = ui->phoneNumberLe->text();
     cycleCommission = ui->cycleCommissionLe->text();
     subjects = ui->subjectsLe->text();
-
+    try{
     if(ui->idLe->text().isEmpty() || ui->lastNameLe->text().isEmpty() || ui->firstNameLe->text().isEmpty() || ui->middleNameLe->text().isEmpty() || ui->birthDateLe->text().isEmpty() || ui->phoneNumberLe->text().isEmpty() || ui->cycleCommissionLe->text().isEmpty() || ui->subjectsLe->text().isEmpty()){
         QMessageBox::warning(this, "Error", "Empty fields");
+        throw std::runtime_error("Some fields are empty");
     }
     else {
         Teacher teacher;
@@ -44,5 +45,8 @@ void CreateTeacher::on_confirmTeacherButton_clicked()
         } else {
             QMessageBox::warning(this, "Error", "Error with the database!");
         }
+    }
+    }catch(const std::runtime_error &e){
+    qWarning()<<"Exception in creating: "<<e.what();
     }
 }

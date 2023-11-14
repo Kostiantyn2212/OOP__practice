@@ -4,6 +4,7 @@
 #include <QtSql/QSqlTableModel>
 #include "Student.h"
 #include "Teacher.h"
+#include "Logger.h"
 
 class DBManager
 {

@@ -25,9 +25,10 @@ void CreateStudent::on_confirmStudentButton_clicked()
     faculty = ui->facultyLe->text();
     course = ui->courseLe->text();
     group = ui->groupLe->text();
-
+    try{
     if(ui->idLe->text().isEmpty() || ui->lastNameLe->text().isEmpty() || ui->firstNameLe->text().isEmpty() || ui->middleNameLe->text().isEmpty() || ui->birthDateLe->text().isEmpty() || ui->phoneNumberLe->text().isEmpty() || ui->facultyLe->text().isEmpty() || ui->courseLe->text().isEmpty() || ui->groupLe->text().isEmpty()){
         QMessageBox::warning(this, "Error", "Empty fields");
+        throw std::runtime_error("Some fields are empty");
     }
     else {
         Student student;
@@ -47,4 +48,7 @@ void CreateStudent::on_confirmStudentButton_clicked()
             QMessageBox::warning(this, "Error", "Error with the database!");
         }
     }
+}catch(const std::runtime_error &e){
+    qWarning()<<"Exception in creating: "<<e.what();
+}
 }
